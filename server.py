@@ -9,7 +9,7 @@ svr_address = ('localhost', 10000)
 svr_sck.bind(svr_address)
 
 #socket goes to server mode
-svr_sck.listen(1)
+svr_sck.listen()
 
 sockets = [svr_sck]
 clients = {}
@@ -24,7 +24,8 @@ def recieve_msg(clt_sck):
 
         msg_len = int(header.decode('utf-8').strip())
 
-        return header, clt_sck.recv(msg_len)
+        #return data and data size
+        return {'header': header, 'data': clt_sck.recv(msg_len)}
 
     except:
         return False
@@ -38,28 +39,45 @@ while True:
         if sck == svr_address:  #new connection happened
             #accpet new connection
             clt_sck, clt_address = svr_sck.accept()
-
-            sockets.append(clt_sck)
-
-    try:
-        print('connection from', clt_address)
-
-        full_data = ''
-        new_data = True
-
-        while True:
-            data = clt_sck.recv(16)
-
-            if new_data:
-                data_len = int(data[:HEADERSIZE])
-                new_data = False
             
-            full_data += data.decode("utf-8")
+            #recieve username
+            user = recieve_msg(clt_sck)
+            
+            if not user:    #user quits before sending id
+                continue
+            
+            #add socket and save client
+            sockets.append(clt_sck)
+            clients[clt_sck] = user
 
-            if len(full_data)-HEADERSIZE == data_len:
-                print("full message:", full_data[HEADERSIZE:])
-                new_data = True
-    
-    finally:
-        #clean up connection
-        clt_sck.close()
+            print("new connection from {}:{}, username: {}".format(*clt_address, user['data'].decode('utf-8')))
+
+        else:   #message from existing connection
+            #recieve message
+            msg = recieve_msg(sck)
+
+            if not msg: #delete disconnected client
+                print('connection with {} closed'.format(clients[sck]['data'].decode('utf-8')))
+                
+                #delete client's data and socket
+                sockets.remove(sck)
+                del clients[sck]
+
+                continue
+            
+            #get user from client list
+            user = clients[sck]
+
+            #send message to other clients
+            for clt_sck in clients:
+                if clt_sck != sck:
+                    clt_sck.send(user['header']+user['data']+msg['header']+msg['data'])
+        
+    # *It's not really necessary to have this, but will handle some socket exceptions just in case
+    for sck in exception_sockets:
+
+        # *Remove from list for socket.socket()
+        sockets.remove(sck)
+
+        # *Remove from our list of users
+        del clients[sck]
