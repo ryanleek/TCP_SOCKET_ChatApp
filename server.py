@@ -2,11 +2,14 @@ import socket
 import select
 
 HEADERSIZE = 10
+IP = 'localhost'
+PORT = 10000
+#create server socket
 svr_sck = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+svr_sck.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 #setting address & port no.
-svr_address = ('localhost', 10000)
-svr_sck.bind(svr_address)
+svr_sck.bind((IP, PORT))
 
 #socket goes to server mode
 svr_sck.listen()
@@ -14,8 +17,11 @@ svr_sck.listen()
 sockets = [svr_sck]
 clients = {}
 
+print(f'Listening for connections on {IP}:{PORT}...')
+
 #get message from client and seperate header
 def recieve_msg(clt_sck):
+
     try:
         header = clt_sck.recv(HEADERSIZE)
 
@@ -36,7 +42,7 @@ while True:
 
     for sck in read_sockets:
 
-        if sck == svr_address:  #new connection happened
+        if sck == svr_sck:  #new connection happened
             #accpet new connection
             clt_sck, clt_address = svr_sck.accept()
             
@@ -67,6 +73,8 @@ while True:
             
             #get user from client list
             user = clients[sck]
+
+            print(f'received message from {user["data"].decode("utf-8")}: {msg["data"].decode("utf-8")}')
 
             #send message to other clients
             for clt_sck in clients:
