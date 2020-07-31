@@ -47,7 +47,7 @@ while True:
 
             #recieve message
             rmsg_header = clt_sck.recv(HEADERSIZE)
-            rmsg_len = int(msg_header.decode('utf-8').strip())
+            rmsg_len = int(rmsg_header.decode('utf-8').strip())
             rmsg = clt_sck.recv(rmsg_len).decode('utf-8')
 
             #print message
