@@ -1,15 +1,24 @@
 from tkinter import*
 
 root = Tk()
+root.title("Chatroom")
 
-e = Entry(root, width=50)
-e.pack()
+msg_frame = Frame(root)
 
-def send():
-    btn1 = Label(root, text=e.get())
-    btn1.pack()
+scrollbar = Scrollbar(msg_frame)
+msg_list = Listbox(msg_frame, height=15, width=50, yscrollcommand=scrollbar.set)
 
-btn2 = Button(root, text="send", command=send)
-btn2.pack()
+scrollbar.pack(side=RIGHT, fill=Y)
+msg_list.pack(side=LEFT, fill=BOTH)
+msg_frame.pack()
+
+input_frame = Frame(root)
+
+input_field = Entry(input_frame, width=47)
+send_btn = Button(input_frame, text="send")
+
+send_btn.pack(side=RIGHT, fill=Y)
+input_field.pack(side=LEFT, fill=BOTH)
+input_frame.pack()
 
 root.mainloop()
