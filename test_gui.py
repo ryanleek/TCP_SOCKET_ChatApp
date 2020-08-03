@@ -15,10 +15,9 @@ msg_frame.pack()
 input_frame = Frame(root)
 
 input_field = Entry(input_frame, width=47)
-send_btn = Button(input_frame, text="send")
+send_btn = Button(input_frame, text="send", command=send)
 
 send_btn.pack(side=RIGHT, fill=Y)
 input_field.pack(side=LEFT, fill=BOTH)
 input_frame.pack()
 
-root.mainloop()
