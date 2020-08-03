@@ -76,10 +76,9 @@ while True:
 
             print(f'received message from {user["data"].decode("utf-8")}: {msg["data"].decode("utf-8")}')
 
-            #send message to other clients
+            #send message to clients
             for clt_sck in clients:
-                if clt_sck != sck:
-                    clt_sck.send(user['header']+user['data']+msg['header']+msg['data'])
+                clt_sck.send(user['header']+user['data']+msg['header']+msg['data'])
         
     # *It's not really necessary to have this, but will handle some socket exceptions just in case
     for sck in exception_sockets:
