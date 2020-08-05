@@ -1,3 +1,5 @@
+#2020 SOCKET PROGRAM(chat client) BY ryanleek
+#WORK CITED IN READ.ME
 import socket
 import sys
 import time
