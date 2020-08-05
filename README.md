@@ -1,5 +1,8 @@
 # SOCKET
 2020 socket programming introduction with python
+- learn how socket works with python
+- experience multi-threading
+- use tkinter to create GUI
 
 With help from...
 
