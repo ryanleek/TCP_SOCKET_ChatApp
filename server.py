@@ -1,3 +1,5 @@
+#2020 SOCKET PROGRAM(chat server) BY ryanleek
+#WORK CITED IN READ.ME
 import socket
 import select
 
