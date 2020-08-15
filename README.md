@@ -1,8 +1,11 @@
 # SOCKET
-2020 socket programming introduction with python
+2020 Socket Programming Introduction With Python
 - learn how socket works with python
 - experience multi-threading
 - use tkinter to create GUI
+- create executable with Pyinstaller
+
+Executable file in dist folder.
 
 With help from...
 
