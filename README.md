@@ -1,6 +1,6 @@
 # SOCKET
 2020 Socket Programming Introduction With Python
-- learn how socket works with python
+- learn how socket(TCP) works with python
 - experience multi-threading
 - use tkinter to create GUI
 - create executable with Pyinstaller
