@@ -5,7 +5,8 @@
 - use tkinter to create GUI
 - create executable with Pyinstaller
 
-Executable file in dist folder.
+Executable file in dist folder. 
+Download whole dist folder to run program.
 
 With help from...
 
