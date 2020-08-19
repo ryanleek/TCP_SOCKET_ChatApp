@@ -6,7 +6,7 @@
 - create executable with Pyinstaller
 
 Executable file in 'dist' folder. 
-Download whole 'dist' folder to run program.
+Download the whole 'dist' folder to run program.
 
 With help from...
 
